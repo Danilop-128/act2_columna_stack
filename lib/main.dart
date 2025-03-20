@@ -3,41 +3,63 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
-      title: 'Flutter Hello World',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        // useMaterial3: false,
-        primarySwatch: Colors.blue,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Card en Fila'),
+          backgroundColor: Color(0xFFFFB6C1),
+        ),
+        body: Center(
+          child: MyCard(),
+        ),
       ),
-      // A widget which will be started on application startup
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({super.key, required this.title});  
+class MyCard extends StatelessWidget {
+  final List<Map<String, String>> datos = [
+    {"etiqueta": "Dato 1", "valor": "Valor 1"},
+    {"etiqueta": "Dato 2", "valor": "Valor 2"},
+    {"etiqueta": "Dato 3", "valor": "Valor 3"},
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // The title text which will be shown on the action bar
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
+    return Card(
+      elevation: 5,
+      child: Container(
+        width: 300,
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Color(0xFFADD8E6),
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: datos.map((dato) => _buildDato(dato)).toList(),
         ),
       ),
+    );
+  }
+
+  Widget _buildDato(Map<String, String> dato) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          dato["etiqueta"]!,
+          style: TextStyle(fontSize: 14.0, color: Colors.black),
+        ),
+        Text(
+          dato["valor"]!,
+          style: TextStyle(
+              fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
+        ),
+      ],
     );
   }
 }
